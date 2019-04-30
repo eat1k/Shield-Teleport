@@ -1,0 +1,24 @@
+[en]
+SHIELD_TELEPORT_ENABLED = You are immortal and cannot do damage within %0.f sec.
+SHIELD_TELEPORT_DISABLED = You are mortal ... Now you can do damage!
+SHIELD_TELEPORT_COOLDOWN = Protection after using teleport will be available in %0.f sec.
+
+[es]
+SHIELD_TELEPORT_ENABLED = Eres inmortal y no puedes atacar durante %0.f segundo(s)
+SHIELD_TELEPORT_DISABLED = Eres mortal ... ¡Ahora puedes atacar!
+SHIELD_TELEPORT_COOLDOWN = Protección después de teletransportarse funcionará en %0.f segundo(s)
+
+[ro]
+SHIELD_TELEPORT_ENABLED = Acum este nemuritor si nu poti primi daune timp de %0.f secunde. 
+SHIELD_TELEPORT_DISABLED = Esti muritor ... Acum poti primi daune! 
+SHIELD_TELEPORT_COOLDOWN = Protectia dupa teleport va fi disponibila in %0.f secunde.  
+
+[ru]
+SHIELD_TELEPORT_ENABLED = Вы бессмертны и не можете атаковать игроков в течении %0.f сек.
+SHIELD_TELEPORT_DISABLED = Вы смертны... Теперь можете наносить урон!
+SHIELD_TELEPORT_COOLDOWN = Защита после телепорта будет доступна через %0.f сек.
+
+[tr]
+SHIELD_TELEPORT_ENABLED = Suanda olemezsin ve %0.f saniye boyunca hasar veremezsin.
+SHIELD_TELEPORT_DISABLED = Artik olebilirsin... Ve simdi hasar verebilirsin.
+SHIELD_TELEPORT_COOLDOWN = Teleportu kullandiktan sonra %0.f saniye boyunca koruman olacak.  
