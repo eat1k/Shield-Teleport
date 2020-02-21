@@ -1,24 +1,51 @@
 [en]
-SHIELD_TELEPORT_ENABLED = You are immortal and cannot do damage within %0.f sec.
+SHIELD_TELEPORT_ENABLED = You are immortal and cannot do damage within %.0f sec.
 SHIELD_TELEPORT_DISABLED = You are mortal ... Now you can do damage!
-SHIELD_TELEPORT_COOLDOWN = Protection after using teleport will be available in %0.f sec.
+SHIELD_TELEPORT_COOLDOWN = Protection after using teleport will be available in %.0f sec.
+
+SHIELD_TELEPORT_CVAR_TIMER = How many seconds will the player be protected and won't be able to damage after using a teleport?
+SHIELD_TELEPORT_CVAR_GLOW = Glow shows that damage is forbidden on the player^n0 - disabled^n1 - enabled
+SHIELD_TELEPORT_CVAR_TIME_BLOCK = How many seconds don't give the player protection after using a teleport?
+SHIELD_TELEPORT_CVAR_TEAM = Which team can get protection?^n1 - any^n2 - Terrorists^n3 - Counter-Terrorists
+SHIELD_TELEPORT_CVAR_MESSAGE = How to display messages to the player?^n0 - don't show messages^n1 - chat^n2 - center^n3 - HUD
+SHIELD_TELEPORT_CVAR_HUD_X = Coordinate X for hud message (if shield_teleport_message = 3)
+SHIELD_TELEPORT_CVAR_HUD_Y = Coordinate Y for hud message (if shield_teleport_message = 3)
+SHIELD_TELEPORT_CVAR_HUD_TIME = How many seconds will the hud message be displayed (if shield_teleport_message = 3)
 
 [es]
-SHIELD_TELEPORT_ENABLED = Eres inmortal y no puedes atacar durante %0.f segundo(s)
+SHIELD_TELEPORT_ENABLED = Eres inmortal y no puedes atacar durante %.0f segundo(s)
 SHIELD_TELEPORT_DISABLED = Eres mortal ... ¡Ahora puedes atacar!
-SHIELD_TELEPORT_COOLDOWN = Protección después de teletransportarse funcionará en %0.f segundo(s)
+SHIELD_TELEPORT_COOLDOWN = Protección después de teletransportarse funcionará en %.0f segundo(s)
+
+SHIELD_TELEPORT_CVAR_TIMER = ¿Durante cuántos segundos el jugador estará protegido y no podrá dañar a nadie después de teletransportarse?
+SHIELD_TELEPORT_CVAR_GLOW = Brillo para indicar que el jugador no puede ser dañado^n0 - deshabilitado^n1 - habilitado
+SHIELD_TELEPORT_CVAR_TIME_BLOCK = ¿Durante cuántos segundos no dar protección al jugador después de teletransportarse?
+SHIELD_TELEPORT_CVAR_TEAM = ¿Qué equipo puede recibir protección?^n1 - todos^n2 - Terroristas^n3 - Antiterroristas
+SHIELD_TELEPORT_CVAR_MESSAGE = ¿Cómo mostrar mensajes al jugador?^n0 - no mostrar^n1 - chat^n2 - en el centro^n3 - HUD
+SHIELD_TELEPORT_CVAR_HUD_X = Coordenada X del mensaje HUD^nSe utiliza si shield_teleport_message = 3
+SHIELD_TELEPORT_CVAR_HUD_Y = Coordenada Y del mensaje HUD^nSe utiliza si shield_teleport_message = 3
+SHIELD_TELEPORT_CVAR_HUD_TIME = ¿Durante cuántos segundos se mostrará el mensaje HUD?^nSe utiliza si shield_teleport_message = 3
 
 [ro]
-SHIELD_TELEPORT_ENABLED = Acum este nemuritor si nu poti primi daune timp de %0.f secunde. 
+SHIELD_TELEPORT_ENABLED = Acum este nemuritor si nu poti primi daune timp de %.0f secunde. 
 SHIELD_TELEPORT_DISABLED = Esti muritor ... Acum poti primi daune! 
-SHIELD_TELEPORT_COOLDOWN = Protectia dupa teleport va fi disponibila in %0.f secunde.  
+SHIELD_TELEPORT_COOLDOWN = Protectia dupa teleport va fi disponibila in %.0f secunde.  
 
 [ru]
-SHIELD_TELEPORT_ENABLED = Вы бессмертны и не можете атаковать игроков в течении %0.f сек.
+SHIELD_TELEPORT_ENABLED = Вы бессмертны и не можете атаковать игроков в течении %.0f сек.
 SHIELD_TELEPORT_DISABLED = Вы смертны... Теперь можете наносить урон!
-SHIELD_TELEPORT_COOLDOWN = Защита после телепорта будет доступна через %0.f сек.
+SHIELD_TELEPORT_COOLDOWN = Защита после телепорта будет доступна через %.0f сек.
+
+SHIELD_TELEPORT_CVAR_TIMER = В течении скольких секунд игрок будет бессмертным и не сможет наносить урон после телепорта?
+SHIELD_TELEPORT_CVAR_GLOW = Свечение чтобы распознать что игрок не может быть ранен^n0 - откл.^n1 - вкл.
+SHIELD_TELEPORT_CVAR_TIME_BLOCK = В течении скольки секунд не давать игроку защиту после использования телепорта?
+SHIELD_TELEPORT_CVAR_TEAM = Какая команда может получить защиту?^n1 - любая^n2 - Террористы^n3 - Контр-террористы
+SHIELD_TELEPORT_CVAR_MESSAGE = Как отображать сообщение для игрока?^n0 - не отображать^n1 - чат^n2 - по центру экрана^n3 - HUD
+SHIELD_TELEPORT_CVAR_HUD_X = Координата X для HUD сообщения^nИспользуется если shield_teleport_message = 3
+SHIELD_TELEPORT_CVAR_HUD_Y = Координата Y для HUD сообщения^nИспользуется если shield_teleport_message = 3
+SHIELD_TELEPORT_CVAR_HUD_TIME = В течении скольки секунд отображать HUD сообщение^nИспользуется если shield_teleport_message = 3
 
 [tr]
-SHIELD_TELEPORT_ENABLED = Suanda olemezsin ve %0.f saniye boyunca hasar veremezsin.
+SHIELD_TELEPORT_ENABLED = Suanda olemezsin ve %.0f saniye boyunca hasar veremezsin.
 SHIELD_TELEPORT_DISABLED = Artik olebilirsin... Ve simdi hasar verebilirsin.
-SHIELD_TELEPORT_COOLDOWN = Teleportu kullandiktan sonra %0.f saniye boyunca koruman olacak.  
+SHIELD_TELEPORT_COOLDOWN = Teleportu kullandiktan sonra %.0f saniye boyunca koruman olacak.  
