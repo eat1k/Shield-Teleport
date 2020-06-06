@@ -1,7 +1,7 @@
 /*
  * Authors: 
- * - Original SourceMod plugin: Drumanid (https://dev-cs.ru/members/2742/)
- * - Port to AMXX: https://t.me/twisterniq (https://dev-cs.ru/members/444/)
+ * - Original SourceMod plugin by: Drumanid (https://dev-cs.ru/members/2742/)
+ * - Ported to AMXX by: https://t.me/twisterniq (https://dev-cs.ru/members/444/)
  *
  * Official resource topic: https://dev-cs.ru/resources/635/
  */
@@ -12,19 +12,18 @@
 
 #pragma semicolon 1
 
-new const PLUGIN_NAME[] = "Shield Teleport";
-new const PLUGIN_VERSION[] = "1.2.0";
-new const PLUGIN_AUTHOR[] = "w0w";
+public stock const PluginName[] = "Shield Teleport";
+public stock const PluginVersion[] = "1.2.4";
+public stock const PluginAuthor[] = "twisterniq";
+public stock const PluginURL[] = "https://github.com/twisterniq/Shield-Teleport";
+public stock const PluginDescription[] = "Gives protection to player after using a teleport. Moreover, player cannot do damage at this time";
 
 /****************************************************************************************
 ****************************************************************************************/
 
 #define is_user_valid(%0) (1 <= %0 <= MaxClients)
 
-enum (+= 100)
-{
-	TASK_ID_TIMESHIELD = 100
-};
+const TASK_ID_TIMESHIELD = 100;
 
 new Float:g_flTime[MAX_PLAYERS + 1];
 
@@ -46,11 +45,17 @@ new g_iSyncHudMessage;
 
 public plugin_init()
 {
-	register_plugin(PLUGIN_NAME, PLUGIN_VERSION, PLUGIN_AUTHOR);
+#if AMXX_VERSION_NUM == 190
+	register_plugin(
+		.plugin_name = PluginName,
+		.version = PluginVersion,
+		.author = PluginAuthor);
+#endif
+
 	register_dictionary("shield_teleport.txt");
 
-	RegisterHookChain(RG_CBasePlayer_TraceAttack, "refwd_PlayerTraceAttack_Pre", false);
-	RegisterHam(Ham_Touch, "trigger_teleport", "hamfwd_Touch_TriggerTeleport", true, true);
+	RegisterHookChain(RG_CBasePlayer_TraceAttack, "@OnPlayerTraceAttack_Pre", false);
+	RegisterHam(Ham_Touch, "trigger_teleport", "@OnTouchTriggerTeleport_Post", true, true);
 
 	g_iSyncHudMessage = CreateHudSyncObj();
 
@@ -59,18 +64,15 @@ public plugin_init()
 
 func_RegisterCvars()
 {
-	new pCvar;
-
-	pCvar = create_cvar(
+	bind_pcvar_float(create_cvar(
 		.name = "shield_teleport_timer",
 		.string = "3.0", 
 		.flags = FCVAR_NONE,
 		.description = fmt("%L", LANG_SERVER, "SHIELD_TELEPORT_CVAR_TIMER"),
 		.has_min = true,
-		.min_val = 0.1);
-	bind_pcvar_float(pCvar, g_eCvar[CVAR_TIMER]);
+		.min_val = 0.1), g_eCvar[CVAR_TIMER]);
 
-	pCvar = create_cvar(
+	bind_pcvar_num(create_cvar(
 		.name = "shield_teleport_glow",
 		.string = "1",
 		.flags = FCVAR_NONE,
@@ -78,19 +80,17 @@ func_RegisterCvars()
 		.has_min = true,
 		.min_val = 0.0,
 		.has_max = true,
-		.max_val = 1.0);
-	bind_pcvar_num(pCvar, g_eCvar[CVAR_GLOW]);
+		.max_val = 1.0), g_eCvar[CVAR_GLOW]);
 
-	pCvar = create_cvar(
+	bind_pcvar_num(create_cvar(
 		.name = "shield_teleport_time_block",
 		.string = "10",
 		.flags = FCVAR_NONE,
 		.description = fmt("%L", LANG_SERVER, "SHIELD_TELEPORT_CVAR_TIME_BLOCK"),
 		.has_min = true,
-		.min_val = 0.0);
-	bind_pcvar_num(pCvar, g_eCvar[CVAR_TIMEBLOCK]);
+		.min_val = 0.0), g_eCvar[CVAR_TIMEBLOCK]);
 
-	pCvar = create_cvar(
+	bind_pcvar_num(create_cvar(
 		.name = "shield_teleport_team",
 		.string = "1",
 		.flags = FCVAR_NONE,
@@ -98,10 +98,9 @@ func_RegisterCvars()
 		.has_min = true,
 		.min_val = 1.0,
 		.has_max = true,
-		.max_val = 3.0);
-	bind_pcvar_num(pCvar, g_eCvar[CVAR_TEAM]);
+		.max_val = 3.0), g_eCvar[CVAR_TEAM]);
 
-	pCvar = create_cvar(
+	bind_pcvar_num(create_cvar(
 		.name = "shield_teleport_message",
 		.string = "2",
 		.flags = FCVAR_NONE,
@@ -109,31 +108,27 @@ func_RegisterCvars()
 		.has_min = true,
 		.min_val = 0.0,
 		.has_max = true,
-		.max_val = 3.0);
-	bind_pcvar_num(pCvar, g_eCvar[CVAR_MESSAGE]);
+		.max_val = 3.0), g_eCvar[CVAR_MESSAGE]);
 
-	pCvar = create_cvar(
+	bind_pcvar_float(create_cvar(
 		.name = "shield_message_hud_x",
 		.string = "-1.0",
 		.flags = FCVAR_NONE,
-		.description = fmt("%L", LANG_SERVER, "SHIELD_TELEPORT_CVAR_HUD_X"));
-	bind_pcvar_float(pCvar, g_eCvar[CVAR_MESSAGE_HUD_X]);
+		.description = fmt("%L", LANG_SERVER, "SHIELD_TELEPORT_CVAR_HUD_X")), g_eCvar[CVAR_MESSAGE_HUD_X]);
 
-	pCvar = create_cvar(
+	bind_pcvar_float(create_cvar(
 		.name = "shield_message_hud_y",
 		.string = "0.70",
 		.flags = FCVAR_NONE,
-		.description = fmt("%L", LANG_SERVER, "SHIELD_TELEPORT_CVAR_HUD_Y"));
-	bind_pcvar_float(pCvar, g_eCvar[CVAR_MESSAGE_HUD_Y]);
+		.description = fmt("%L", LANG_SERVER, "SHIELD_TELEPORT_CVAR_HUD_Y")), g_eCvar[CVAR_MESSAGE_HUD_Y]);
 
-	pCvar = create_cvar(
+	bind_pcvar_float(create_cvar(
 		.name = "shield_message_hud_time",
 		.string = "3.0",
 		.flags = FCVAR_NONE,
 		.description = fmt("%L", LANG_SERVER, "SHIELD_TELEPORT_CVAR_HUD_TIME"),
 		.has_min = true,
-		.min_val = 0.1);
-	bind_pcvar_float(pCvar, g_eCvar[CVAR_MESSAGE_HUD_TIME]);
+		.min_val = 0.1), g_eCvar[CVAR_MESSAGE_HUD_TIME]);
 
 	AutoExecConfig(true, "shield_teleport");
 }
@@ -143,26 +138,32 @@ public client_disconnected(id)
 	remove_task(id+TASK_ID_TIMESHIELD);
 }
 
-public refwd_PlayerTraceAttack_Pre(const iVictim, iAttacker, Float:flDamage, Float:flVecDir[3], iTraceHandle, iBitsDamageType)
+@OnPlayerTraceAttack_Pre(const iVictim, iAttacker, Float:flDamage, Float:flVecDir[3], iTraceHandle, iBitsDamageType)
 {
 	#pragma unused flDamage, flVecDir, iTraceHandle, iBitsDamageType
 
 	if(is_user_connected(iAttacker) && (task_exists(iVictim+TASK_ID_TIMESHIELD) || task_exists(iAttacker+TASK_ID_TIMESHIELD)))
+	{
 		return HC_SUPERCEDE;
+	}
 
 	return HC_CONTINUE;
 }
 
-public hamfwd_Touch_TriggerTeleport(iEnt, id)
+@OnTouchTriggerTeleport_Post(const iEnt, const id)
 {
 	if(is_user_valid(id))
+	{
 		func_TeleportUse(id);
+	}
 }
 
-func_TeleportUse(id)
+func_TeleportUse(const id)
 {
 	if(g_eCvar[CVAR_TEAM] != 1 && (get_member(id, m_iTeam) != (g_eCvar[CVAR_TEAM] - 1)))
+	{
 		return;
+	}
 
 	new Float:flGameTime = get_gametime();
 
@@ -176,15 +177,17 @@ func_TeleportUse(id)
 	func_ShowMessage(id, "%l", "SHIELD_TELEPORT_ENABLED", g_eCvar[CVAR_TIMER]);
 
 	remove_task(id+TASK_ID_TIMESHIELD);
-	set_task(g_eCvar[CVAR_TIMER], "task_TimeShield", id+TASK_ID_TIMESHIELD);
+	set_task(g_eCvar[CVAR_TIMER], "@task_TimeShield", id+TASK_ID_TIMESHIELD);
 
 	if(!g_eCvar[CVAR_GLOW])
+	{
 		return;
+	}
 
 	rg_set_user_rendering(id, kRenderFxGlowShell, 165.0, 42.0, 42.0, kRenderNormal, 255.0);
 }
 
-public task_TimeShield(id)
+@task_TimeShield(id)
 {
 	id -= TASK_ID_TIMESHIELD;
 
@@ -195,13 +198,15 @@ public task_TimeShield(id)
 	}
 
 	if(g_eCvar[CVAR_GLOW])
+	{
 		rg_set_user_rendering(id);
+	}
 
 	remove_task(id+TASK_ID_TIMESHIELD);
 	func_ShowMessage(id, "%l", "SHIELD_TELEPORT_DISABLED");
 }
 
-func_ShowMessage(id, szMessage[], any:...)
+func_ShowMessage(const id, szMessage[], any:...)
 {
 	new szText[192];
 	vformat(szText, charsmax(szText), szMessage, 3);
