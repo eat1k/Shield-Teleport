@@ -14,7 +14,7 @@
 public stock const PluginName[] = "Shield Teleport";
 public stock const PluginVersion[] = "1.2.5";
 public stock const PluginAuthor[] = "twisterniq";
-public stock const PluginURL[] = "https://github.com/twisterniq/Shield-Teleport";
+public stock const PluginURL[] = "https://github.com/twisterniq/amxx-shield-teleport";
 public stock const PluginDescription[] = "Gives protection to player after using a teleport. Moreover, player cannot do damage at this time";
 
 /****************************************************************************************
