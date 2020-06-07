@@ -1,7 +1,6 @@
 /*
  * Authors: 
  * - Original SourceMod plugin by: Drumanid (https://dev-cs.ru/members/2742/)
- * - Ported to AMXX by: https://t.me/twisterniq (https://dev-cs.ru/members/444/)
  *
  * Official resource topic: https://dev-cs.ru/resources/635/
  */
@@ -13,7 +12,7 @@
 #pragma semicolon 1
 
 public stock const PluginName[] = "Shield Teleport";
-public stock const PluginVersion[] = "1.2.4";
+public stock const PluginVersion[] = "1.2.5";
 public stock const PluginAuthor[] = "twisterniq";
 public stock const PluginURL[] = "https://github.com/twisterniq/Shield-Teleport";
 public stock const PluginDescription[] = "Gives protection to player after using a teleport. Moreover, player cannot do damage at this time";
@@ -142,7 +141,7 @@ public client_disconnected(id)
 {
 	#pragma unused flDamage, flVecDir, iTraceHandle, iBitsDamageType
 
-	if(is_user_connected(iAttacker) && (task_exists(iVictim+TASK_ID_TIMESHIELD) || task_exists(iAttacker+TASK_ID_TIMESHIELD)))
+	if (is_user_connected(iAttacker) && (task_exists(iVictim+TASK_ID_TIMESHIELD) || task_exists(iAttacker+TASK_ID_TIMESHIELD)))
 	{
 		return HC_SUPERCEDE;
 	}
@@ -152,7 +151,7 @@ public client_disconnected(id)
 
 @OnTouchTriggerTeleport_Post(const iEnt, const id)
 {
-	if(is_user_valid(id))
+	if (is_user_valid(id))
 	{
 		func_TeleportUse(id);
 	}
@@ -160,14 +159,14 @@ public client_disconnected(id)
 
 func_TeleportUse(const id)
 {
-	if(g_eCvar[CVAR_TEAM] != 1 && (get_member(id, m_iTeam) != (g_eCvar[CVAR_TEAM] - 1)))
+	if (g_eCvar[CVAR_TEAM] != 1 && (get_member(id, m_iTeam) != (g_eCvar[CVAR_TEAM] - 1)))
 	{
 		return;
 	}
 
 	new Float:flGameTime = get_gametime();
 
-	if(g_flTime[id] > flGameTime)
+	if (g_flTime[id] > flGameTime)
 	{
 		func_ShowMessage(id, "%l", "SHIELD_TELEPORT_COOLDOWN", g_flTime[id] - flGameTime);
 		return;
@@ -179,7 +178,7 @@ func_TeleportUse(const id)
 	remove_task(id+TASK_ID_TIMESHIELD);
 	set_task(g_eCvar[CVAR_TIMER], "@task_TimeShield", id+TASK_ID_TIMESHIELD);
 
-	if(!g_eCvar[CVAR_GLOW])
+	if (!g_eCvar[CVAR_GLOW])
 	{
 		return;
 	}
@@ -191,13 +190,13 @@ func_TeleportUse(const id)
 {
 	id -= TASK_ID_TIMESHIELD;
 
-	if(!is_user_alive(id))
+	if (!is_user_alive(id))
 	{
 		remove_task(id+TASK_ID_TIMESHIELD);
 		return;
 	}
 
-	if(g_eCvar[CVAR_GLOW])
+	if (g_eCvar[CVAR_GLOW])
 	{
 		rg_set_user_rendering(id);
 	}
