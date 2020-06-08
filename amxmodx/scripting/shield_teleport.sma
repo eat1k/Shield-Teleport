@@ -2,7 +2,7 @@
  * Authors: 
  * - Original SourceMod plugin by: Drumanid (https://dev-cs.ru/members/2742/)
  *
- * Official resource topic: https://dev-cs.ru/resources/635/
+ * Official resource topic: https://dev-cs.ru/resources/596/
  */
 
 #include <amxmodx>
@@ -58,11 +58,6 @@ public plugin_init()
 
 	g_iSyncHudMessage = CreateHudSyncObj();
 
-	func_RegisterCvars();
-}
-
-func_RegisterCvars()
-{
 	bind_pcvar_float(create_cvar(
 		.name = "shield_teleport_timer",
 		.string = "3.0", 
